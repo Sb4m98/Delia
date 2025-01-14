@@ -1,0 +1,17 @@
+streamlit==1.41.1
+openai==1.57.4
+python-dotenv==1.0.0
+langchain==0.3.12
+langchain-community==0.3.12
+langchain-openai==0.2.12
+google-generativeai==0.8.3
+pymupdf==1.25.1
+scikit-learn==1.4.1.post1
+numpy==1.26.4
+pandas==2.2.1
+plotly==5.24.1
+nltk==3.9.1
+streamlit-pdf-viewer==0.0.19
+streamlit-option-menu==0.4.0
+langchain-google-genai==2.0.8
+faiss-cpu==1.9.0.post1
