@@ -32,7 +32,7 @@ from langchain.chains import LLMChain
 # Download NLTK data
 nltk.download('punkt')
 nltk.download('stopwords')
-#nltk.download('punkt_tab')
+nltk.download('punkt_tab')
 
 class DocumentAnalyzer:
     def __init__(self):
