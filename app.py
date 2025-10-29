@@ -1138,7 +1138,7 @@ def chat_page():
                 output_key='answer',
                 input_key='question'
             )'''
-            if "conversation" not in st.session_state:
+           if "conversation" not in st.session_state:
                 llm = ChatGoogleGenerativeAI(
                     model="gemini-pro",
                     temperature=0.3,
@@ -1360,4 +1360,5 @@ def main():
         chat_page()
 if __name__ == "__main__":
     main()
+
 
