@@ -1132,7 +1132,7 @@ def chat_page():
         # Initialize conversation and chat history if they don't exist
         if "conversation" not in st.session_state:
             #llm = ChatOpenAI(temperature=0.3, model="gpt-4-turbo-preview")
-            llm = ChatGoogleGenerativeAI(model="gemini-pro", temperature=0.3, convert_system_message_to_human=True)
+            llm = ChatGoogleGenerativeAI(model="gemini-2.5-pro", temperature=0.3, convert_system_message_to_human=True)
             memory = ConversationBufferMemory(
                 memory_key="chat_history",
                 return_messages=True,
@@ -1355,6 +1355,7 @@ def main():
         chat_page()
 if __name__ == "__main__":
     main()
+
 
 
 
