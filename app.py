@@ -359,7 +359,7 @@ class EnhancedConversationalRetrievalChain(Chain):
 
 class VectorStoreManager:
     def __init__(self):
-        self.embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+        self.embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
     
     def create_vectorstore(self, chunks_with_metadata: List[Tuple[str, Dict]]) -> FAISS:
         texts = [chunk[0] for chunk in chunks_with_metadata]
@@ -1355,5 +1355,6 @@ def main():
         chat_page()
 if __name__ == "__main__":
     main()
+
 
 
