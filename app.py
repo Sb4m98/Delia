@@ -10,6 +10,8 @@ from langchain.schema import HumanMessage, AIMessage
 import fitz
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_google_genai import ChatGoogleGenerativeAI
+from google import genai
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 import tempfile
 import google.generativeai as genai
 from sklearn.metrics.pairwise import cosine_similarity
@@ -1172,8 +1174,9 @@ def chat_page():
 
         if "conversation" not in st.session_state:
             llm = ChatGoogleGenerativeAI(
-                model="gemini-2.5-pro",
+                model="gemini-2.5-flash",
                 temperature=0.3,
+                google_api_key=google_api_key,
                 convert_system_message_to_human=True
             )
             retriever = st.session_state.vectorstore.as_retriever(
@@ -1392,5 +1395,6 @@ def main():
         chat_page()
 if __name__ == "__main__":
     main()
+
 
 
