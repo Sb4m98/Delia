@@ -33,7 +33,6 @@ from langchain.chains import LLMChain
 # Download NLTK data
 nltk.download('punkt')
 nltk.download('stopwords')
-nltk.download('punkt_tab')
 
 class DocumentAnalyzer:
     def __init__(self):
@@ -1138,12 +1137,13 @@ def chat_page():
                 output_key='answer',
                 input_key='question'
             )'''
-           if "conversation" not in st.session_state:
-                llm = ChatGoogleGenerativeAI(
-                    model="gemini-pro",
-                    temperature=0.3,
-                    convert_system_message_to_human=True
-                )
+
+        if "conversation" not in st.session_state:
+            llm = ChatGoogleGenerativeAI(
+                model="gemini-pro",
+                temperature=0.3,
+                convert_system_message_to_human=True
+            )
             retriever = st.session_state.vectorstore.as_retriever(
                 search_type="mmr",
                 search_kwargs={"k": 7, "fetch_k": 14, "lambda_mult": 0.7}
@@ -1360,5 +1360,3 @@ def main():
         chat_page()
 if __name__ == "__main__":
     main()
-
-
