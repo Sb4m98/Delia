@@ -204,7 +204,7 @@ class DocumentProcessor:
 
 class RelevanceScorer:
     def __init__(self):
-        self.embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+        self.embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-004")
     
     def compute_similarity(self, text1: str, text2: str) -> float:
         """Calcola la similarità semantica tra due testi."""
@@ -1355,3 +1355,4 @@ def main():
         chat_page()
 if __name__ == "__main__":
     main()
+
