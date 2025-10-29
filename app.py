@@ -31,8 +31,40 @@ import re
 from langchain.chains.base import Chain
 from langchain.chains import LLMChain
 # Download NLTK data
-nltk.download('punkt')
-nltk.download('stopwords')
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize 
+import ssl
+
+# Fix per SSL e download NLTK
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+else:
+    ssl._create_default_https_context = _create_unverified_https_context
+
+# Download dei dati NLTK con gestione errori
+def download_nltk_data():
+    """Scarica i dati NLTK necessari."""
+    required_packages = [
+        'punkt',
+        'punkt_tab',
+        'stopwords',
+        'averaged_perceptron_tagger'
+    ]
+    
+    for package in required_packages:
+        try:
+            nltk.data.find(f'tokenizers/{package}')
+        except LookupError:
+            try:
+                nltk.download(package, quiet=True)
+            except Exception as e:
+                print(f"Errore nel download di {package}: {e}")
+
+# Esegui il download all'avvio
+download_nltk_data()
 
 class DocumentAnalyzer:
     def __init__(self):
@@ -1360,4 +1392,5 @@ def main():
         chat_page()
 if __name__ == "__main__":
     main()
+
 
