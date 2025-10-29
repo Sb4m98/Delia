@@ -1140,7 +1140,7 @@ def chat_page():
 
         if "conversation" not in st.session_state:
             llm = ChatGoogleGenerativeAI(
-                model="gemini-pro",
+                model="gemini-2.5-pro",
                 temperature=0.3,
                 convert_system_message_to_human=True
             )
@@ -1360,3 +1360,4 @@ def main():
         chat_page()
 if __name__ == "__main__":
     main()
+
