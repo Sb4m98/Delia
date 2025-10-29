@@ -3,15 +3,13 @@ import streamlit as st
 from dotenv import load_dotenv
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_openai import OpenAIEmbeddings, ChatOpenAI
+#from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain_community.vectorstores import FAISS
 from langchain.memory import ConversationBufferMemory
 from langchain.schema import HumanMessage, AIMessage
 import fitz
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
-from langchain_google_genai import ChatGoogleGenerativeAI
-from google import genai
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
+import google.generativeai as genai
+from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
 import tempfile
 import google.generativeai as genai
 from sklearn.metrics.pairwise import cosine_similarity
@@ -33,40 +31,9 @@ import re
 from langchain.chains.base import Chain
 from langchain.chains import LLMChain
 # Download NLTK data
-import nltk
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize 
-import ssl
-
-# Fix per SSL e download NLTK
-try:
-    _create_unverified_https_context = ssl._create_unverified_context
-except AttributeError:
-    pass
-else:
-    ssl._create_default_https_context = _create_unverified_https_context
-
-# Download dei dati NLTK con gestione errori
-def download_nltk_data():
-    """Scarica i dati NLTK necessari."""
-    required_packages = [
-        'punkt',
-        'punkt_tab',
-        'stopwords',
-        'averaged_perceptron_tagger'
-    ]
-    
-    for package in required_packages:
-        try:
-            nltk.data.find(f'tokenizers/{package}')
-        except LookupError:
-            try:
-                nltk.download(package, quiet=True)
-            except Exception as e:
-                print(f"Errore nel download di {package}: {e}")
-
-# Esegui il download all'avvio
-download_nltk_data()
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('punkt_tab')
 
 class DocumentAnalyzer:
     def __init__(self):
@@ -1163,21 +1130,14 @@ def chat_page():
         st.markdown("### Chatta con i tuoi documenti")
         
         # Initialize conversation and chat history if they don't exist
-        '''if "conversation" not in st.session_state:
-            llm = ChatOpenAI(temperature=0.3, model="gpt-4-turbo-preview")
+        if "conversation" not in st.session_state:
+            #llm = ChatOpenAI(temperature=0.3, model="gpt-4-turbo-preview")
+            llm = ChatGoogleGenerativeAI(model="gemini-pro", temperature=0.3, convert_system_message_to_human=True)
             memory = ConversationBufferMemory(
                 memory_key="chat_history",
                 return_messages=True,
                 output_key='answer',
                 input_key='question'
-            )'''
-
-        if "conversation" not in st.session_state:
-            llm = ChatGoogleGenerativeAI(
-                model="gemini-2.5-flash",
-                temperature=0.3,
-                google_api_key=google_api_key,
-                convert_system_message_to_human=True
             )
             retriever = st.session_state.vectorstore.as_retriever(
                 search_type="mmr",
@@ -1395,6 +1355,3 @@ def main():
         chat_page()
 if __name__ == "__main__":
     main()
-
-
-
