@@ -9,6 +9,7 @@ from langchain.memory import ConversationBufferMemory
 from langchain.schema import HumanMessage, AIMessage
 import fitz
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_google_genai import ChatGoogleGenerativeAI
 import tempfile
 import google.generativeai as genai
 from sklearn.metrics.pairwise import cosine_similarity
@@ -1129,14 +1130,20 @@ def chat_page():
         st.markdown("### Chatta con i tuoi documenti")
         
         # Initialize conversation and chat history if they don't exist
-        if "conversation" not in st.session_state:
+        '''if "conversation" not in st.session_state:
             llm = ChatOpenAI(temperature=0.3, model="gpt-4-turbo-preview")
             memory = ConversationBufferMemory(
                 memory_key="chat_history",
                 return_messages=True,
                 output_key='answer',
                 input_key='question'
-            )
+            )'''
+            if "conversation" not in st.session_state:
+                llm = ChatGoogleGenerativeAI(
+                    model="gemini-pro",
+                    temperature=0.3,
+                    convert_system_message_to_human=True
+                )
             retriever = st.session_state.vectorstore.as_retriever(
                 search_type="mmr",
                 search_kwargs={"k": 7, "fetch_k": 14, "lambda_mult": 0.7}
@@ -1353,3 +1360,4 @@ def main():
         chat_page()
 if __name__ == "__main__":
     main()
+
